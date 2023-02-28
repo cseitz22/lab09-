@@ -99,11 +99,33 @@ The intercept indicates the evaluation score a professor would receive if their 
 
 ### Exercise 8 
 
-Determine the R2 of the model and interpret it in context of the data.
+Since R-squared is the same as the slope of our regression line, so it is .067. This suggests that 6.7% of the variation in evaluation scores is accounted for by beauty ratings, which may not seem like a lot but it is more than we would like considering beauty shouldn't play a role in the how well a professor can teach. 
 
 ### Exercise 9 
 
-Fit a new linear model called m_gen to predict average professor evaluation score based on gender of the professor. Based on the regression output, write the linear model and interpret the slope and intercept in context of the data.
+Here, I just plotted the evaluation scores based on gender to see which gender has higher scores on average. 
+
+```{r plot-gender}
+
+ggplot(evals, aes(y = score, x=gender))+
+  geom_point(alpha=.3)+
+  stat_summary(aes(y=score, group=1), fun=mean, color="orange", geom="line", group=1)+
+  labs(title="Relationship between Score and Gender", y="Evaluation Score", x="Gender")
+
+```
+
+```{r fit-model-categorical}
+
+linear_reg() %>%
+  set_engine("lm") %>%
+  fit(score ~ gender, data = evals) %>%
+  tidy()
+
+```
+
+Model: (Evaluation Score)=4.09 + 0.14(gender)
+
+The slope indicates that males typically have higher evaluation scores by 0.14 points. The intercept is the average evaluation score of the female professors. 
 
 
 ### Exercise 10 
