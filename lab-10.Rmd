@@ -32,37 +32,103 @@ The distribution is negatively skewed. Students seem to rate most professors rel
 
 ```{r vis-score-beauty}
 
-ggplot(evals, aes(x = score, y=bty_avg))+
+ggplot(evals, aes(x = bty_avg, y=score))+
   geom_point()+
   stat_smooth(method="lm", se=F)+
-  annotate("text", x=2.8, y=8, label=(paste0("slope==", coef(lm(evals$bty_avg~evals$score))[2])), parse=TRUE)+
-  labs(title="Relationship between Score and Beauty", x="Evaluation Score", y="Average Beauty Rating")
+  #annotate("text", x=2.8, y=8, label=(paste0("slope==", coef(lm(evals$score~evals$bty_avg))[2])), parse=TRUE)+
+  labs(title="Relationship between Score and Beauty", y="Evaluation Score", x="Average Beauty Rating")
 
 ```
 
 Evaluation score and average beauty rating seem to be correlated; so typically, higher beauty ratings also get higher evaluation scores. 
 
 
+### Exercise 3
 
 
+```{r jitter-score-beauty}
+
+ggplot(evals, aes(y = score, x=bty_avg))+
+  geom_jitter()+
+  stat_smooth(method="lm")+
+  labs(title="Relationship between Score and Beauty", y="Evaluation Score", x="Average Beauty Rating")
+
+```
+
+Jitter "adds a small amount of random variation to the location of each point." This new plot handles overplotting, so now all of the data points are pretty much in view. 
 
 
+### Exercise 4
+
+We are trying to understand variations in evaluation score based on beauty rating. 
+
+```{r fit-linear-model}
+
+linear_reg() %>%
+  set_engine("lm") %>%
+  fit(score ~ bty_avg, data = evals) %>%
+  tidy()
+
+```
+
+Model: (Evaluation Score) = 3.88 + 0.067(Beauty Rating)
+
+This model was significant, so beauty ratings significantly predicted evaluation scores of professors. 
+
+### Exercise 5
+
+I had already plotted with the regression line before being asked to do so, so here it is again, but in orange. 
+
+```{r score-beauty-line}
+
+ggplot(evals, aes(y = score, x=bty_avg))+
+  geom_jitter()+
+  stat_smooth(method="lm", color= "orange", se=FALSE)+
+  labs(title="Relationship between Score and Beauty", y="Evaluation Score", x="Average Beauty Rating")
+
+```
+
+### Exercise 6
+
+The higher the average beauty ratings professors receive, the higher evaluation scores they are given by students. 
 
 
+### Exercise 7 
+
+The intercept indicates the evaluation score a professor would receive if their beauty rating was 0. In this context, this makes sense because professors can still be evaluated if they are extremely unattractive.
+
+### Exercise 8 
+
+Determine the R2 of the model and interpret it in context of the data.
+
+### Exercise 9 
+
+Fit a new linear model called m_gen to predict average professor evaluation score based on gender of the professor. Based on the regression output, write the linear model and interpret the slope and intercept in context of the data.
 
 
+### Exercise 10 
 
+What is the equation of the line corresponding to male professors? What is it for female professors?
 
+### Exercise 11
 
+Fit a new linear model called m_rank to predict average professor evaluation score based on rank of the professor. Based on the regression output, write the linear model and interpret the slopes and intercept in context of the data.
 
+### Exercise 12
 
+Create a new variable called rank_relevel where "tenure track" is the baseline level.
 
+### Exercise 13
 
+Fit a new linear model called m_rank_relevel to predict average professor evaluation score based on rank_relevel of the professor. This is the new (releveled) variable you created in Exercise 13. Based on the regression output, write the linear model and interpret the slopes and intercept in context of the data. Also determine and interpret the R2 of the model.
 
+### Exercise 14
 
+Create another new variable called tenure_eligible that labels "teaching" faculty as "no" and labels "tenure track" and "tenured" faculty as "yes".
 
+### Exercise 15
 
-
+Fit a new linear model called m_tenure_eligible to predict average professor evaluation score based on tenure_eligibleness of the professor. This is the new (regrouped) variable you created in Exercise 15. Based on the regression output, write the linear model and interpret the slopes and intercept in context of the data. Also determine and interpret the R2 of the model.
 
 
 
