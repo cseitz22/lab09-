@@ -1,7 +1,7 @@
 ---
-title: "Lab 10 - Grading the professor, Pt. 2"
-author: "Insert your name here"
-date: "Insert date here"
+title: "Lab 9 - Modeling professor attractiveness and course evaluations"
+author: "Cat Seitz"
+date: "02.28.2023"
 output: github_document
 ---
 
@@ -11,17 +11,94 @@ output: github_document
 library(tidyverse) 
 library(tidymodels)
 library(openintro)
+library(broom)
 ```
 
 ### Exercise 1
 
-Remove this text, and add your answer for Exercise 1 here.
-Add code chunks as needed.
-Don't forget to label your code chunk.
-Do not use spaces in code chunk labels.
+```{r distribution-score}
+
+evals<-evals
+
+ggplot(evals, aes(x=score))+
+  geom_histogram(binwidth=0.1)
+
+```
+
+The distribution is negatively skewed. Students seem to rate most professors relatively highly. I would expect this for a few reasons: 1) they are professors - typically tenured or tenure-track at a university - so I would expect them to have some experience and be decent, 2) the students are paying tuition to be there so they wouldn't necessarily want to admit that they're not getting great instruction, 3) these scores are the average across many students' evaluations so it's unlikely to get a consensus bad review. 
+
 
 ### Exercise 2
 
-...
+```{r vis-score-beauty}
 
-Add exercise headings as needed.
+ggplot(evals, aes(x = score, y=bty_avg))+
+  geom_point()+
+  stat_smooth(method="lm", se=F)+
+  annotate("text", x=2.8, y=8, label=(paste0("slope==", coef(lm(evals$bty_avg~evals$score))[2])), parse=TRUE)+
+  labs(title="Relationship between Score and Beauty", x="Evaluation Score", y="Average Beauty Rating")
+
+```
+
+Evaluation score and average beauty rating seem to be correlated; so typically, higher beauty ratings also get higher evaluation scores. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
