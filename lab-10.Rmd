@@ -99,7 +99,12 @@ The intercept indicates the evaluation score a professor would receive if their 
 
 ### Exercise 8 
 
-Since R-squared is the same as the slope of our regression line, so it is .067. This suggests that 6.7% of the variation in evaluation scores is accounted for by beauty ratings, which may not seem like a lot but it is more than we would like considering beauty shouldn't play a role in the how well a professor can teach. 
+```{r r-squared}
+
+summary(lm(score ~ bty_avg, data = evals))
+
+```
+The adjusted R-squared is .033. This suggests that 3.3% of the variation in evaluation scores is accounted for by beauty ratings, which may not seem like a lot but it is more than we would like considering beauty shouldn't play a role in the how well a professor can teach. 
 
 ### Exercise 9 
 
@@ -163,6 +168,15 @@ evals<-evals %>%
 
 ### Exercise 13
 
+```{r plot-gender}
+
+ggplot(evals, aes(y = score, x=rank))+
+  geom_point(alpha=.3)+
+  stat_summary(aes(y=score, group=1), fun=mean, color="orange", geom="line", group=1)+
+  labs(title="Relationship between Score and Rank", y="Evaluation Score", x="Rank")
+
+```
+
 ```{r fit-model-mrank-relevel}
 
 linear_reg() %>%
@@ -170,11 +184,17 @@ linear_reg() %>%
   fit(score ~ rank_relevel, data = evals) %>%
   tidy()
 
+summary(lm(score ~ rank_relevel, data=evals))
+
 ```
 
-Model: (Evaluation Score)
+Model: (Evaluation Score) = 4.15 - .015(tenured professors) + .13(teaching professors)
 
-Fit a new linear model called m_rank_relevel to predict average professor evaluation score based on rank_relevel of the professor. This is the new (releveled) variable you created in Exercise 13. Based on the regression output, write the linear model and interpret the slopes and intercept in context of the data. Also determine and interpret the R2 of the model.
+Tenure track professors are expected, on average, to have an evaluation score of 4.15. Tenured professors are expected, on average, to have scores .015 points less than tenure track professors, and teaching professors are expected, on average, to have scores .13 points greater than tenure track professors. 
+
+The adjusted R2 is .007 and indicates that 0.7% of variation in evaluation scores is predicted by professor rank. 
+
+
 
 ### Exercise 14
 
