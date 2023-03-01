@@ -134,7 +134,19 @@ What is the equation of the line corresponding to male professors? What is it fo
 
 ### Exercise 11
 
-Fit a new linear model called m_rank to predict average professor evaluation score based on rank of the professor. Based on the regression output, write the linear model and interpret the slopes and intercept in context of the data.
+```{r fit-model-mrank}
+
+linear_reg() %>%
+  set_engine("lm") %>%
+  fit(score ~ rank, data = evals) %>%
+  tidy()
+
+```
+
+Model: (Evaluation Score)= 4.28 - .13(tenure track professors) - .15(tenured professors) <- this seems off??
+
+Teaching professors are expected, on average, to have an evaluation score of 4.28. Tenure track professors are expected, on average, to have scores .13 points less than teaching professors, and tenured professors are expected, on average, to have scores .15 points less than teaching professors. 
+
 
 ### Exercise 12
 
