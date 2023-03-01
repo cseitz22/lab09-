@@ -150,9 +150,29 @@ Teaching professors are expected, on average, to have an evaluation score of 4.2
 
 ### Exercise 12
 
-Create a new variable called rank_relevel where "tenure track" is the baseline level.
+```{r rank-relevel}
+
+evals<-evals %>%
+  mutate(rank_relevel = 
+           case_when(rank=="tenure track" ~"A",
+                     rank=="tenured"~"B",
+                     rank=="teaching"~"C"))
+
+```
+
 
 ### Exercise 13
+
+```{r fit-model-mrank-relevel}
+
+linear_reg() %>%
+  set_engine("lm") %>%
+  fit(score ~ rank_relevel, data = evals) %>%
+  tidy()
+
+```
+
+Model: (Evaluation Score)
 
 Fit a new linear model called m_rank_relevel to predict average professor evaluation score based on rank_relevel of the professor. This is the new (releveled) variable you created in Exercise 13. Based on the regression output, write the linear model and interpret the slopes and intercept in context of the data. Also determine and interpret the R2 of the model.
 
