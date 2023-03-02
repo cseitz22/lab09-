@@ -209,43 +209,21 @@ evals<-evals %>%
 
 ### Exercise 15
 
-Fit a new linear model called m_tenure_eligible to predict average professor evaluation score based on tenure_eligibleness of the professor. This is the new (regrouped) variable you created in Exercise 15. Based on the regression output, write the linear model and interpret the slopes and intercept in context of the data. Also determine and interpret the R2 of the model.
 
+```{r fit-model-tenure-eligible}
 
+linear_reg() %>%
+  set_engine("lm") %>%
+  fit(score ~ tenure_eligible, data = evals) %>%
+  tidy()
 
+summary(lm(score ~ tenure_eligible, data=evals))
 
+```
 
+Model: (Evaluation Score) = 4.28 - .14(tenure-eligible professors)
 
+Teaching professors are expected, on average, to have an evaluation score of 4.28. Tenure-eligible professors are expected, on average, to have scores .014 points less than teaching professors.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+The adjusted R2 is .009 and indicates that 0.9% of variation in evaluation scores is predicted by tenure eligibility.
 
