@@ -135,7 +135,11 @@ The slope indicates that males typically have higher evaluation scores by 0.14 p
 
 ### Exercise 10 
 
-What is the equation of the line corresponding to male professors? What is it for female professors?
+These are the average evaluation scores for each gender. 
+
+Male: y=4.23
+Female: y=4.09
+
 
 ### Exercise 11
 
@@ -168,7 +172,7 @@ evals<-evals %>%
 
 ### Exercise 13
 
-```{r plot-gender}
+```{r plot-rank}
 
 ggplot(evals, aes(y = score, x=rank))+
   geom_point(alpha=.3)+
