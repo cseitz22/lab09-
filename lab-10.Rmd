@@ -194,11 +194,18 @@ Tenure track professors are expected, on average, to have an evaluation score of
 
 The adjusted R2 is .007 and indicates that 0.7% of variation in evaluation scores is predicted by professor rank. 
 
-
-
 ### Exercise 14
 
-Create another new variable called tenure_eligible that labels "teaching" faculty as "no" and labels "tenure track" and "tenured" faculty as "yes".
+```{r rank-transform}
+
+evals<-evals %>%
+  mutate(tenure_eligible = 
+           case_when(rank=="tenure track" ~"yes",
+                     rank=="tenured"~"yes",
+                     rank=="teaching"~"no"))
+
+```
+
 
 ### Exercise 15
 
